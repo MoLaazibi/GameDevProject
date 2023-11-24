@@ -24,7 +24,6 @@ namespace GameProject
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-       
             base.Initialize();
         }
 
@@ -32,7 +31,9 @@ namespace GameProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _texture = Content.Load<Texture2D>("Hero");
-            hero = new Hero(_texture);
+            IInputReader keyboardReader = new KeyboardReader();
+            hero = new Hero(_texture, keyboardReader);
+
 
             // TODO: use this.Content to load your game content here
         }

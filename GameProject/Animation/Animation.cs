@@ -27,8 +27,9 @@ namespace GameProject
         public void Update(GameTime gameTime)
         {
             secondCounter += gameTime.ElapsedGameTime.TotalSeconds;
-            int fps = 5;
-            if (secondCounter >= 1d / fps)
+            int fps = 15;
+            double frameTime = 1d / fps;
+            if (secondCounter >= frameTime)
             {
                 counter++;
                 secondCounter = 0;
