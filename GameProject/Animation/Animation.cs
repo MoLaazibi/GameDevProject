@@ -27,7 +27,7 @@ namespace GameProject
         public void Update(GameTime gameTime)
         {
             secondCounter += gameTime.ElapsedGameTime.TotalSeconds;
-            int fps = 15;
+            int fps = 5;
             double frameTime = 1d / fps;
             if (secondCounter >= frameTime)
             {
@@ -36,6 +36,34 @@ namespace GameProject
             }
             if (counter >= frames.Count) counter = 0;
             CurrentFrame = frames[counter];
+        }
+        public void LoadTextureFrames(string direction, int width, int height, int widthSpriteCount, int heightSpriteCount)
+        {
+            frames.Clear();
+            int spriteWidht = width / widthSpriteCount;
+            int spriteHeight = height / heightSpriteCount;
+            int xPosition = 0;
+            int yPosition = 0;
+            switch (direction)
+            {
+                case "right":
+                    yPosition = spriteHeight * 3;
+                    break;
+                case "left":
+                    yPosition = spriteHeight * 2;
+                    break;
+                case "up":
+                    yPosition = spriteHeight;
+                    break;
+                case "down": 
+                    yPosition = 0;
+                    break;
+            }
+            for (int i = 0; i < widthSpriteCount; i++)
+            {
+                Addframe(new Frame(new Rectangle(xPosition, yPosition, spriteWidht, spriteHeight)));
+                xPosition += spriteWidht;
+            }
         }
         
     }

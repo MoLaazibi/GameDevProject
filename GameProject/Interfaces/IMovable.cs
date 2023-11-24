@@ -12,6 +12,7 @@ namespace GameProject.Interfaces
         public  Vector2 Position { get; set; }
         public Vector2 Speed { get; set; }
         public IInputReader inputReader { get; set; }
+        public string DirectionString { get; set; }
         public void Move();
     }
 }

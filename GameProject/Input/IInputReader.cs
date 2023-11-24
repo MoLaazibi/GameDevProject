@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameProject.Interfaces;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace GameProject
 {
     internal interface IInputReader
     {
-        Vector2 ReadInput();
+        Vector2 ReadInput(IMovable movable);
     }
 }
