@@ -15,53 +15,43 @@ using System.Threading.Tasks;
 
 namespace GameProject
 {
-    internal class Hero : IGameObject, IMovable
+    internal class Hero : Character, IGameObject, IMovable
     {
-        private Texture2D heroTexture;
-        //public Rectangle deelRectangle;
-        private MovementManager movementManager;
-        //public Vector2 Position { get; set; }
-        //public Vector2 Speed { get; set; }
-        Animation animation;
-        public Vector2 Position { get; set; }
-        public Vector2 Speed { get; set; }
         public IInputReader inputReader { get; set; }
-        public string DirectionString { get; set; }
-        public Hero(Texture2D texture, IInputReader inputReader)
+        public Hero(Texture2D texture,IInputReader inputReader) : base(texture)
         {
-            this.heroTexture = texture;
-            animation = new Animation();
-            movementManager = new MovementManager();
-            //animation.Addframe(new Frame(new Rectangle(0, 0, 122, 145)));
-            //animation.Addframe(new Frame(new Rectangle(122, 0, 122, 145)));
-            //animation.Addframe(new Frame(new Rectangle(244, 0, 122, 145)));
-            //animation.Addframe(new Frame(new Rectangle(366, 0, 122, 145)));
-            //animation.LoadTextureFrames(DirectionString, texture.Width, texture.Height, 4, 4);
             Position = new Vector2(1, 1);
             Speed = new Vector2(3, 3);
             this.inputReader = inputReader;
 
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             Debug.WriteLine($"Drawing frame: {animation.CurrentFrame.SourceRectangle}");
-            spriteBatch.Draw(heroTexture, Position, animation.CurrentFrame.SourceRectangle, Color.White);
+            spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White);
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             Move();
-            Debug.WriteLine("Direction:" + DirectionString);
-            if(DirectionString != "still") animation.LoadTextureFrames(DirectionString, heroTexture.Width, heroTexture.Height, 4, 4);
-            if(DirectionString == "still") animation.Addframe(new Frame(new Rectangle(0, 0, 122, 145)));
-
+            UpdateAnimationFrames();
             animation.Update(gameTime);
 
         }
-        public void Move()
+        private void UpdateAnimationFrames()
         {
-            movementManager.Move(this);
-           
+            if (DirectionString != "still")
+            {
+                animation.LoadTextureFrames(DirectionString, texture.Width, texture.Height, 4, 4);
+            }
+            else
+            {
+                animation.Addframe(new Frame(new Rectangle(0, 0, texture.Width / 4, texture.Height / 4)));
+            }
+        }
+        public override void Move()
+        {
+            movementManager.MovePlayer(this, texture);
         }
     }
 }
