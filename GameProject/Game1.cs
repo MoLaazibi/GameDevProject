@@ -14,9 +14,6 @@ namespace GameProject
         private SpriteBatch _spriteBatch;
         private Texture2D _heroTexture;
         private Texture2D _enemyTexture;
-        private Texture2D _blokTexture;
-        Rectangle box;
-        Vector2 position = new Vector2(20, 20);
         Hero hero;
         Enemy enemy1;
        
@@ -68,21 +65,14 @@ namespace GameProject
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CadetBlue);
-            
+
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            //_spriteBatch.Draw(_texture, new Vector2(0, 0), rectangle,Color.White);
-            //_spriteBatch.Draw(_blokTexture, box, Color.Red);
             hero.Draw(_spriteBatch);
             enemy1.Draw(_spriteBatch);
             hero.collisionBox.Draw(_spriteBatch);
             enemy1.collisionBox.Draw(_spriteBatch);
-            //_spriteBatch.Draw(_blokTexture, box, Color.Red);
             _spriteBatch.End();
-            //hero.Update();
-            //schuifOpX += 122;
-            //if (schuifOpX > 366) schuifOpX = 0;
-            //else rectangle.X = schuifOpX;
             base.Draw(gameTime);
         }
     }

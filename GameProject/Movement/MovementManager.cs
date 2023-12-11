@@ -1,4 +1,5 @@
-﻿using GameProject.Interfaces;
+﻿using GameProject;
+using GameProject.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,22 +15,23 @@ namespace GameProject
 {
     internal class MovementManager
     {
+
         public void MovePlayer(IMovable movable, ICollidable collidable)
         {
             var direction = movable.inputReader.ReadInput(movable);
             if (direction == Vector2.Zero) movable.DirectionString = "still";
             direction.Normalize();
             var futurePosition = movable.Position + movable.Speed * direction;
-            if (CheckCollision(futurePosition, collidable))
+            if (CollisionManager.CheckWindowCollision(futurePosition, collidable))
             { 
                 movable.Position = futurePosition;
             }
         }
-        public void MoveEnemy(Enemy enemy, Texture2D texture)
+        public void MoveEnemy(Enemy enemy)
         {
             var direction = GetEnemyDirection(enemy.Direction, enemy);
             var futurePosition = enemy.Position + enemy.Speed * direction;
-            if (CheckCollision(futurePosition, enemy))
+            if (CollisionManager.CheckWindowCollision(futurePosition, enemy))
             {
                 enemy.Position = futurePosition;
             }
@@ -37,19 +39,6 @@ namespace GameProject
             {
                 enemy.Direction = GetEnemyDirection(enemy.Direction, enemy);
             }
-        }
-        public bool CheckCollision(Vector2 futurePosition, ICollidable collidable)
-        {
-            Rectangle futureRectangle = new Rectangle((int)futurePosition.X, (int)futurePosition.Y, collidable.CollisionRectangle.Width, collidable.CollisionRectangle.Height);
-
-            // Controleer of de toekomstige rechthoek binnen de grenzen van het scherm ligt
-            bool withinScreenBounds = (futureRectangle.Left >= 0 && futureRectangle.Right <= 800 &&
-                                       futureRectangle.Top >= 0 && futureRectangle.Bottom <= 480);
-
-            // Controleer op overlap met andere collidable objecten
-            //bool collidesWithOthers = CheckCollidesWithOtherCollidables(futureRectangle, collidable);
-
-            return withinScreenBounds;
         }
         public Vector2 GetEnemyDirection(Vector2 currentDirection, Enemy enemy)
         {

@@ -37,7 +37,7 @@ namespace GameProject
         }
         public override void Move()
         {
-            movementManager.MoveEnemy(this, texture);
+            movementManager.MoveEnemy(this);
         }
     }
 }
