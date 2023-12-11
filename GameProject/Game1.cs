@@ -44,11 +44,8 @@ namespace GameProject
             //Load enemy1 content
             _enemyTexture = Content.Load<Texture2D>("Enemy1");
             enemy1 = new Enemy(_enemyTexture);
-            //Load box content
-            _blokTexture = new Texture2D(GraphicsDevice, 1, 1);
-            _blokTexture.SetData(new[] { Color.White });
-            box = new Rectangle((int)position.X, (int)position.Y, 40, 70);
-            // TODO: use this.Content to load your game content here
+            //HeroLoad box content
+            hero.collisionBox = new CollisionBox(GraphicsDevice, (int)hero.Position.X, (int)hero.Position.Y);
         }
 
         protected override void Update(GameTime gameTime)

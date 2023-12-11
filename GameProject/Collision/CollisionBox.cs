@@ -2,26 +2,40 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GameProject
 {
-    internal class CollisionBox : Game
+    internal class CollisionBox
     {
-        public Texture2D boxTexture;
+        public Texture2D BoxTexture;
         public Rectangle SourceRectangle { get; set; }
-       
-        public CollisionBox(int x, int y)
+        public int Width { get; set; } = 40;
+        public int Height { get; set; } = 70;
+        public int XPosition { get; set; }
+        public int YPosition { get; set; }
+        public CollisionBox(GraphicsDevice graphicsDevice ,int x, int y)
         {
-            SourceRectangle = new Rectangle(x, y, 40, 70);
+            XPosition = x;
+            YPosition = y;
+            SourceRectangle = new Rectangle(XPosition + 15, YPosition + 6, Width, Height);
+            BoxTexture = new Texture2D(graphicsDevice, 1, 1);
+            BoxTexture.SetData(new[] { Color.White });
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            boxTexture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
-            boxTexture.SetData(new[] { Color.White });
-            spriteBatch.Draw(boxTexture, SourceRectangle, Color.Red);
+            spriteBatch.Draw(BoxTexture, SourceRectangle, Color.Transparent);
+        }
+        public void Update(int newX, int newY)
+        {
+            XPosition = newX;
+            YPosition = newY;
+
+            SourceRectangle = new Rectangle(XPosition + 15, YPosition + 6, Width, Height);
+            Debug.WriteLine($"CollisionBox Position: ({XPosition}, {YPosition})");
         }
 
     }
