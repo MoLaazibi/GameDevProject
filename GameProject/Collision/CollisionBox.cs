@@ -31,12 +31,13 @@ namespace GameProject
         }
         public void Update(int newX, int newY)
         {
+            
             XPosition = newX;
             YPosition = newY;
 
             SourceRectangle = new Rectangle(XPosition + 15, YPosition + 6, Width, Height);
-            Debug.WriteLine($"CollisionBox Position: ({XPosition}, {YPosition})");
         }
+        
 
     }
 }

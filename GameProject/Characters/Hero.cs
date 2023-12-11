@@ -14,12 +14,15 @@ using System.Threading.Tasks;
 
 namespace GameProject
 {
-    internal class Hero : Character, IGameObject, IMovable
+    internal class Hero : Character, IGameObject, IMovable, ICollidable
     {
         public IInputReader inputReader { get; set; }
-        public Rectangle CollisionBox { get; set; }
 
         public CollisionBox collisionBox;
+        public Rectangle CollisionRectangle
+        {
+            get { return collisionBox.SourceRectangle; }
+        }
         public Hero(Texture2D texture,IInputReader inputReader) : base(texture)
         {
             this.inputReader = inputReader;
@@ -37,7 +40,6 @@ namespace GameProject
             Move();
             UpdateAnimationFrames();
             animation.Update(gameTime);
-            Debug.WriteLine("Hero Position:" + Position);
             collisionBox.Update((int)Position.X, (int)Position.Y);
             
         }
@@ -54,7 +56,7 @@ namespace GameProject
         }
         public override void Move()
         {
-            movementManager.MovePlayer(this, texture);
+            movementManager.MovePlayer(this, this);
         }
     }
 }

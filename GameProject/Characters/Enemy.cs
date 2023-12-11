@@ -9,9 +9,14 @@ using System.Threading.Tasks;
 
 namespace GameProject
 {
-    internal class Enemy : Character, IGameObject
+    internal class Enemy : Character, IGameObject, ICollidable
     {
         public Vector2 Direction { get; set; }
+        public CollisionBox collisionBox;
+        public Rectangle CollisionRectangle
+        {
+            get { return collisionBox.SourceRectangle; }
+        }
         public Enemy(Texture2D texture) : base(texture)
         {
             Position = new Vector2(1, 1);
@@ -28,6 +33,7 @@ namespace GameProject
             Move();
             animation.LoadTextureFrames(DirectionString, texture.Width, texture.Height, 4, 4);
             animation.Update(gameTime);
+            collisionBox.Update((int)Position.X, (int)Position.Y);
         }
         public override void Move()
         {
