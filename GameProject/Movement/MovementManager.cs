@@ -17,49 +17,31 @@ namespace GameProject
         public void MovePlayer(IMovable movable, Texture2D texture)
         {
             var direction = movable.inputReader.ReadInput(movable);
-            //direction.Normalize();
-            //Debug.WriteLine(movable.DirectionString);
             if (direction == Vector2.Zero) movable.DirectionString = "still";
             direction.Normalize();
-            //Debug.WriteLine("Direction: " + direction.X + "" + direction.Y);
             var futurePosition = movable.Position + movable.Speed * direction;
-            //Debug.WriteLine("ToekomstigePos: " + futurePosition);
-            //Debug.WriteLine("TextureHeight:" + texture.Height + "TextureWidth:" + texture.Width);
-            if (
-              (futurePosition.X < (800 - (texture.Width / 4))
-               && futurePosition.X > 0) &&
-               (futurePosition.Y < 480 - (texture.Height / 4)
-               && futurePosition.Y > 0)
-            )
-            {
+            if (CheckCollision(futurePosition, texture))
+            { 
                 movable.Position = futurePosition;
             }
-            //Debug.WriteLine("Position: " + movable.Position);
         }
         public void MoveEnemy(Enemy enemy, Texture2D texture)
         {
-
-            // Calculate the future position based on the current position and speed
             var direction = GetEnemyDirection(enemy.Direction, enemy);
-            //enemy.DirectionString = "right";
             var futurePosition = enemy.Position + enemy.Speed * direction;
-
-            // Check for window collisions
-            if (
-                (futurePosition.X < (800 - (texture.Width / 4)) && futurePosition.X > 0) &&
-                (futurePosition.Y < 480 - (texture.Height / 4) && futurePosition.Y > 0)
-            )
+            if (CheckCollision(futurePosition, texture))
             {
-                // Update the enemy's position
                 enemy.Position = futurePosition;
             }
             else
             {
-                // Reverse the direction when hitting the window boundaries
                 enemy.Direction = GetEnemyDirection(enemy.Direction, enemy);
             }
-            
-
+        }
+        public bool CheckCollision(Vector2 futurePosition, Texture2D texture)
+        {
+            return (futurePosition.X < (800 - (texture.Width / 4)) && futurePosition.X > 0) &&
+                   (futurePosition.Y < 480 - (texture.Height / 4) && futurePosition.Y > 0);
         }
         public Vector2 GetEnemyDirection(Vector2 currentDirection, Enemy enemy)
         {

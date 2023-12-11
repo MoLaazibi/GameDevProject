@@ -4,7 +4,6 @@ using Microsoft.VisualBasic.Devices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,11 +17,13 @@ namespace GameProject
     internal class Hero : Character, IGameObject, IMovable
     {
         public IInputReader inputReader { get; set; }
+        public Rectangle CollisionBox { get; set; }
         public Hero(Texture2D texture,IInputReader inputReader) : base(texture)
         {
+            this.inputReader = inputReader;
             Position = new Vector2(1, 1);
             Speed = new Vector2(3, 3);
-            this.inputReader = inputReader;
+            CollisionBox = new Rectangle((int)Position.X, (int)Position.Y, 40, 70);
 
         }
         public override void Draw(SpriteBatch spriteBatch)

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.Direct2D1.Effects;
 using System.Xml.Serialization;
 
 namespace GameProject
@@ -12,10 +13,12 @@ namespace GameProject
         private SpriteBatch _spriteBatch;
         private Texture2D _heroTexture;
         private Texture2D _enemyTexture;
+        private Texture2D _blokTexture;
+        Rectangle box;
+        Vector2 position = new Vector2(20, 20);
         Hero hero;
         Enemy enemy1;
-        //private Rectangle rectangle;
-        //private int schuifOpX = 0;
+       
 
         public Game1()
         {
@@ -41,8 +44,10 @@ namespace GameProject
             //Load enemy1 content
             _enemyTexture = Content.Load<Texture2D>("Enemy1");
             enemy1 = new Enemy(_enemyTexture);
-
-
+            //Load box content
+            _blokTexture = new Texture2D(GraphicsDevice, 1, 1);
+            _blokTexture.SetData(new[] { Color.White });
+            box = new Rectangle((int)position.X, (int)position.Y, 40, 70);
             // TODO: use this.Content to load your game content here
         }
 
@@ -64,8 +69,10 @@ namespace GameProject
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
             //_spriteBatch.Draw(_texture, new Vector2(0, 0), rectangle,Color.White);
+            //_spriteBatch.Draw(_blokTexture, box, Color.Red);
             hero.Draw(_spriteBatch);
             enemy1.Draw(_spriteBatch);
+            //_spriteBatch.Draw(_blokTexture, box, Color.Red);
             _spriteBatch.End();
             //hero.Update();
             //schuifOpX += 122;
