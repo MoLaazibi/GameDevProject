@@ -1,4 +1,5 @@
 ﻿
+using GameProject.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,6 +15,8 @@ namespace GameProject
         private SpriteBatch _spriteBatch;
         private Texture2D _heroTexture;
         private Texture2D _enemyTexture;
+        private Texture2D _healthBarTexture;
+        HealthBar healthBar;
         Hero hero;
         Enemy enemy1;
        
@@ -44,30 +47,40 @@ namespace GameProject
             //Load enemy1 content
             _enemyTexture = Content.Load<Texture2D>("Enemy1");
             enemy1 = new Enemy(_enemyTexture);
+            //Load healthBar Content
+            _healthBarTexture = Content.Load<Texture2D>("HealthBar");
+            healthBar = new HealthBar(_healthBarTexture);
             //HeroBox content
             hero.collisionBox = new CollisionBox(GraphicsDevice, (int)hero.Position.X, (int)hero.Position.Y);
             //EmemyBox Content
             enemy1.collisionBox = new CollisionBox(GraphicsDevice, (int)enemy1.Position.X, (int)enemy1.Position.Y);
         }
-
+        private void HandleCollisions()
+        {
+            CollisionOutcome collisionOutcome = CollisionManager.CheckCollisionWithCollider(hero, enemy1);
+            if (collisionOutcome.DidCollide)
+            {
+                Debug.WriteLine("BOTSING");
+            }
+        }
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            HandleCollisions();
             hero.Update(gameTime);
             enemy1.Update(gameTime);
-            if (hero.CollisionRectangle.Intersects(enemy1.CollisionRectangle)) Debug.WriteLine("BOTSING");
+            
             base.Update(gameTime);
         }
-
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CadetBlue);
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
+            healthBar.Draw(_spriteBatch);
             hero.Draw(_spriteBatch);
             enemy1.Draw(_spriteBatch);
             hero.collisionBox.Draw(_spriteBatch);

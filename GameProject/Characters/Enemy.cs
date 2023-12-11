@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GameProject
 {
-    internal class Enemy : Character, IGameObject, ICollidable
+    internal class Enemy : Character, IGameObject, ICollidable, IEnemy
     {
         public Vector2 Direction { get; set; }
         public CollisionBox collisionBox;
@@ -19,7 +19,7 @@ namespace GameProject
         }
         public Enemy(Texture2D texture) : base(texture)
         {
-            Position = new Vector2(1, 1);
+            Position = new Vector2(1, 50);
             Speed = new Vector2(2, 2);
             Direction = Vector2.UnitX;
         }

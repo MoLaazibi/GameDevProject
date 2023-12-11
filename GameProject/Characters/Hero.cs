@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace GameProject
 {
-    internal class Hero : Character, IGameObject, IMovable, ICollidable
+    internal class Hero : Character, IGameObject, IMovable, ICollidable, IPlayer
     {
         public IInputReader inputReader { get; set; }
 

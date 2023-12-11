@@ -21,9 +21,16 @@ namespace GameProject
 
             return withinScreenBounds;
         }
-        public static bool CheckCollisionWithCollider(ICollidable collider1, ICollidable collider2)
+        public static CollisionOutcome CheckCollisionWithCollider(ICollidable collider1, ICollidable collider2)
         {
-            return collider1.CollisionRectangle.Intersects(collider2.CollisionRectangle);
+            if (collider1.CollisionRectangle.Intersects(collider2.CollisionRectangle))
+            {
+                return new CollisionOutcome(true, collider1, collider2);
+            }
+            else
+            {
+                return CollisionOutcome.NotCollision;
+            }
         }
     }
 }
