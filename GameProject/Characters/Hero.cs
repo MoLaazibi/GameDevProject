@@ -18,16 +18,17 @@ namespace GameProject
     {
         public IInputReader inputReader { get; set; }
         public Rectangle CollisionBox { get; set; }
+
+        public CollisionBox collisionBox;
         public Hero(Texture2D texture,IInputReader inputReader) : base(texture)
         {
             this.inputReader = inputReader;
             Position = new Vector2(1, 1);
             Speed = new Vector2(3, 3);
-            CollisionBox = new Rectangle((int)Position.X, (int)Position.Y, 40, 70);
-
+            collisionBox = new CollisionBox((int)Position.X, (int)Position.Y);
         }
         public override void Draw(SpriteBatch spriteBatch)
-        {
+        { 
             Debug.WriteLine($"Drawing frame: {animation.CurrentFrame.SourceRectangle}");
             spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White);
         }

@@ -72,6 +72,7 @@ namespace GameProject
             //_spriteBatch.Draw(_blokTexture, box, Color.Red);
             hero.Draw(_spriteBatch);
             enemy1.Draw(_spriteBatch);
+            hero.collisionBox.Draw(_spriteBatch);
             //_spriteBatch.Draw(_blokTexture, box, Color.Red);
             _spriteBatch.End();
             //hero.Update();

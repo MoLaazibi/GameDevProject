@@ -8,16 +8,20 @@ using System.Threading.Tasks;
 
 namespace GameProject
 {
-    internal class CollisionBox
+    internal class CollisionBox : Game
     {
-        private Texture2D boxTexture;
+        public Texture2D boxTexture;
         public Rectangle SourceRectangle { get; set; }
-        public int Width { get; set; } = 40;
-        public int Heigt { get; set; } = 70;
-        public CollisionBox(SpriteBatch spriteBatch)
+       
+        public CollisionBox(int x, int y)
+        {
+            SourceRectangle = new Rectangle(x, y, 40, 70);
+        }
+        public void Draw(SpriteBatch spriteBatch)
         {
             boxTexture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
             boxTexture.SetData(new[] { Color.White });
+            spriteBatch.Draw(boxTexture, SourceRectangle, Color.Red);
         }
 
     }
