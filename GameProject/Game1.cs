@@ -16,6 +16,8 @@ namespace GameProject
         private Texture2D _heroTexture;
         private Texture2D _enemyTexture;
         private Texture2D _healthBarTexture;
+        private Texture2D _bulletTexture;
+        Rectangle bullet;
         HealthBar healthBar;
         Hero hero;
         Enemy enemy1;
@@ -40,20 +42,22 @@ namespace GameProject
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            //Load hero content
+
             _heroTexture = Content.Load<Texture2D>("Hero");
             IInputReader keyboardReader = new KeyboardReader();
             hero = new Hero(_heroTexture, keyboardReader);
-            //Load enemy1 content
+            hero.collisionBox = new CollisionBox(GraphicsDevice, (int)hero.Position.X, (int)hero.Position.Y);
+
             _enemyTexture = Content.Load<Texture2D>("Enemy1");
             enemy1 = new Enemy(_enemyTexture);
-            //Load healthBar Content
+            enemy1.collisionBox = new CollisionBox(GraphicsDevice, (int)enemy1.Position.X, (int)enemy1.Position.Y);
+
             _healthBarTexture = Content.Load<Texture2D>("HealthBar");
             healthBar = new HealthBar(_healthBarTexture);
-            //HeroBox content
-            hero.collisionBox = new CollisionBox(GraphicsDevice, (int)hero.Position.X, (int)hero.Position.Y);
-            //EmemyBox Content
-            enemy1.collisionBox = new CollisionBox(GraphicsDevice, (int)enemy1.Position.X, (int)enemy1.Position.Y);
+
+            _bulletTexture = Content.Load<Texture2D>("RedBullet");
+            bullet = new Rectangle(0, 0, _bulletTexture.Width, _bulletTexture.Height);
+           
         }
         private void HandleCollisions()
         {
@@ -85,6 +89,7 @@ namespace GameProject
             enemy1.Draw(_spriteBatch);
             hero.collisionBox.Draw(_spriteBatch);
             enemy1.collisionBox.Draw(_spriteBatch);
+            _spriteBatch.Draw(_bulletTexture, new Vector2(50, 50), bullet, Color.White);
             _spriteBatch.End();
             base.Draw(gameTime);
         }
