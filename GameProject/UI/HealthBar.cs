@@ -20,7 +20,7 @@ namespace GameProject.UI
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Vector2(0, 0), rectangle, Color.White);
+            spriteBatch.Draw(texture, new Vector2(0, -10), rectangle, Color.White);
         }
     }
 }
