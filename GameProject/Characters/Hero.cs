@@ -20,13 +20,18 @@ namespace GameProject
         public IInputReader inputReader { get; set; }
         private Texture2D bulletTexture;
 
+
         public CollisionBox collisionBox;
         public Rectangle CollisionRectangle
         {
             get { return collisionBox.SourceRectangle; }
         }
+
+
         public ShootingManager shootingManager;
         public List<Projectile> Projectiles { get; set; }
+
+
         public Hero(Texture2D texture,Texture2D bulletTexture, IInputReader inputReader) : base(texture)
         {
             this.inputReader = inputReader;
@@ -35,6 +40,7 @@ namespace GameProject
             this.bulletTexture = bulletTexture;
             shootingManager = new ShootingManager();
             Projectiles = new List<Projectile>();
+
         }
         public override void Draw(SpriteBatch spriteBatch)
         { 
@@ -48,7 +54,8 @@ namespace GameProject
             UpdateAnimationFrames();
             animation.Update(gameTime);
             collisionBox.Update((int)Position.X, (int)Position.Y);
-            shootingManager.UpdateProjectile(this);
+            shootingManager.UpdateProjectile(this, gameTime);
+            
         }
         private void UpdateAnimationFrames()
         {

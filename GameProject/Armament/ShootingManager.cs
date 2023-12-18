@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,12 +11,18 @@ namespace GameProject
 {
     internal class ShootingManager
     {
-        public void UpdateProjectile(Hero hero)
+        private double elapsedTime = 1.0;
+        private double timeBetweenShots = 1.0;
+        public void UpdateProjectile(Hero hero, GameTime gameTime)
         {
+
+            elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Space))
+            Debug.WriteLine("elapsed time:" + elapsedTime);
+            if (state.IsKeyDown(Keys.Space) && elapsedTime >= timeBetweenShots)
             {
                 hero.FireProjectile();
+                elapsedTime = 0.0;
             }
             foreach (var projectile in hero.Projectiles)
             {
