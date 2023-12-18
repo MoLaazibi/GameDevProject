@@ -24,5 +24,9 @@ namespace GameProject {
             Position = position;
             spriteBatch.Draw(texture, Position, SourceRectangle, Color.White);
         }
+        public void UpdatePosition()
+        {
+            Position += Speed;
+        }
     }
 }

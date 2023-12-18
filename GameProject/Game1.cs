@@ -44,8 +44,9 @@ namespace GameProject
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _heroTexture = Content.Load<Texture2D>("Hero");
+            _bulletTexture = Content.Load<Texture2D>("GreenBullet");
             IInputReader keyboardReader = new KeyboardReader();
-            hero = new Hero(_heroTexture, keyboardReader);
+            hero = new Hero(_heroTexture, _bulletTexture ,keyboardReader);
             hero.collisionBox = new CollisionBox(GraphicsDevice, (int)hero.Position.X, (int)hero.Position.Y);
 
             _enemyTexture = Content.Load<Texture2D>("Enemy1");
@@ -55,7 +56,6 @@ namespace GameProject
             _healthBarTexture = Content.Load<Texture2D>("HealthBar");
             healthBar = new HealthBar(_healthBarTexture);
 
-            _bulletTexture = Content.Load<Texture2D>("RedBullet");
             bullet = new Rectangle(0, 0, _bulletTexture.Width, _bulletTexture.Height);
            
         }
@@ -89,7 +89,10 @@ namespace GameProject
             enemy1.Draw(_spriteBatch);
             hero.collisionBox.Draw(_spriteBatch);
             enemy1.collisionBox.Draw(_spriteBatch);
-            _spriteBatch.Draw(_bulletTexture, new Vector2(50, 50), bullet, Color.White);
+            foreach(var projectile in hero.Projectiles)
+            {
+                projectile.Draw(_spriteBatch, projectile.Position);
+            }
             _spriteBatch.End();
             base.Draw(gameTime);
         }
