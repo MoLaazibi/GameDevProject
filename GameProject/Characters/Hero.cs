@@ -48,13 +48,13 @@ namespace GameProject
             spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
         {
             Move();
             UpdateAnimationFrames();
             animation.Update(gameTime);
             collisionBox.Update((int)Position.X, (int)Position.Y);
-            shootingManager.UpdateProjectile(this, gameTime);
+            shootingManager.UpdateProjectile(this, gameTime, graphicsDevice);
             
         }
         private void UpdateAnimationFrames()
@@ -72,7 +72,7 @@ namespace GameProject
         {
             movementManager.MovePlayer(this, this);
         }
-        public void FireProjectile()
+        public void FireProjectile(GraphicsDevice graphicsDevice)
         {
             if (DirectionString != "still")
             {
@@ -92,7 +92,7 @@ namespace GameProject
                         speed.Y -= 5;
                         break;
                 }
-                Projectile projectile = new Projectile(bulletTexture) { Position = this.Position, Speed = speed };
+                Projectile projectile = new Projectile(bulletTexture, graphicsDevice) { Position = this.Position, Speed = speed };
                 Projectiles.Add(projectile);
             }
         }

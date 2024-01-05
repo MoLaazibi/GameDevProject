@@ -11,6 +11,6 @@ namespace GameProject.Interfaces
     internal interface IGameObject
     {
         void Draw(SpriteBatch spriteBatch);
-        void Update(GameTime gameTime);
+        void Update(GameTime gameTime, GraphicsDevice graphicsDevice);
     }
 }

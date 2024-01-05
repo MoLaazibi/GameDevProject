@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace GameProject
         {
             get { return collisionBox.SourceRectangle; }
         }
+        public bool IsAlive => Health > 0;
+        public int Health { get; set; } = 3;
         public Enemy(Texture2D texture) : base(texture)
         {
             Position = new Vector2(1, 50);
@@ -25,10 +28,13 @@ namespace GameProject
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White);
+            if (IsAlive)
+            {
+                spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White);
+            }
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
         {
             Move();
             animation.LoadTextureFrames(DirectionString, texture.Width, texture.Height, 4, 4);
@@ -38,6 +44,14 @@ namespace GameProject
         public override void Move()
         {
             movementManager.MoveEnemy(this);
+        }
+        public void TakeDamage(int damage)
+        {
+            Health -= damage;
+            if (Health <= 0)
+            {
+                Debug.WriteLine("ENEMY JUST DIED");
+            }
         }
     }
 }
