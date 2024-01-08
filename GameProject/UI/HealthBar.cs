@@ -15,7 +15,7 @@ namespace GameProject.UI
         public HealthBar(Texture2D texture)
         {
             this.texture = texture;
-            rectangle = new Rectangle(0, 0, texture.Width, 69);
+            rectangle = new Rectangle(0, 0, texture.Width / 5, 69);
         }
 
         public void Draw(SpriteBatch spriteBatch)

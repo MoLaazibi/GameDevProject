@@ -11,7 +11,7 @@ namespace GameProject
 {
     internal class KeyboardReader : IInputReader
     {
-        public Vector2 ReadInput(IMovable movable)
+        public Vector2 ReadInput(IControlable movable)
         {
             KeyboardState state = Keyboard.GetState();
             var direction = Vector2.Zero;

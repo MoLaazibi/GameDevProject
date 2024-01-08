@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameProject.Interfaces
 {
-    internal interface IPlayer : ICollidable
+    internal interface IMovingCharacter
     {
-        public int Health { get; set; }
-        public bool IsAlive { get; }
-        void TakeDamage(int damage);
+        public void Move();
     }
 }

@@ -28,6 +28,5 @@ namespace GameProject
         public abstract void Draw(SpriteBatch spriteBatch);
 
         public abstract void Update(GameTime gameTime, GraphicsDevice graphicsDevice);
-        public abstract void Move();
     }
 }

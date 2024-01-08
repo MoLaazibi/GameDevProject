@@ -16,7 +16,7 @@ namespace GameProject
     internal class MovementManager
     {
 
-        public void MovePlayer(IMovable movable, ICollidable collidable)
+        public void MovePlayer(IControlable movable, ICollidable collidable)
         {
             var direction = movable.inputReader.ReadInput(movable);
             if (direction == Vector2.Zero) movable.DirectionString = "still";
@@ -27,7 +27,7 @@ namespace GameProject
                 movable.Position = futurePosition;
             }
         }
-        public void MoveEnemy(Enemy enemy)
+        public void MoveEnemy(IEnemy enemy)
         {
             var direction = GetEnemyDirection(enemy.Direction, enemy);
             var futurePosition = enemy.Position + enemy.Speed * direction;
@@ -40,7 +40,7 @@ namespace GameProject
                 enemy.Direction = GetEnemyDirection(enemy.Direction, enemy);
             }
         }
-        public Vector2 GetEnemyDirection(Vector2 currentDirection, Enemy enemy)
+        public Vector2 GetEnemyDirection(Vector2 currentDirection, IEnemy enemy)
         {
             if (currentDirection == Vector2.Zero) currentDirection.X += 1;
             else currentDirection.X *= -1;

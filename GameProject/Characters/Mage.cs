@@ -1,83 +1,66 @@
-﻿
-using GameProject.Interfaces;
+﻿using GameProject.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using SharpDX.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace GameProject
 {
-    internal class Hero : Character, IGameObject, IControlable, ICollidable, IPlayer, IMovingCharacter
+    internal class Mage : Character, IGameObject, ICollidable, IEnemy
     {
-        public IInputReader inputReader { get; set; }
         private Texture2D bulletTexture;
-
-
+        public Vector2 Direction { get; set; }
         public CollisionBox collisionBox;
         public Rectangle CollisionRectangle
         {
             get { return collisionBox.SourceRectangle; }
         }
-
+        public bool IsAlive => Health > 0;
+        public int Health { get; set; } = 3;
 
         public ShootingManager shootingManager;
         public List<Projectile> Projectiles { get; set; }
-        public int Health { get; set; } = 1;
-
-        public bool IsAlive => Health > 0;
-
-        public Hero(Texture2D texture,Texture2D bulletTexture, IInputReader inputReader) : base(texture)
+        public Mage(Texture2D texture, Texture2D bulletTexture) : base(texture)
         {
-            this.inputReader = inputReader;
-            Position = new Vector2(100,150);
-            Speed = new Vector2(3, 3);
+            Position = new Vector2(325, 200);
+            Speed = new Vector2(2, 2);
+            Direction = Vector2.UnitX;
             this.bulletTexture = bulletTexture;
             shootingManager = new ShootingManager();
             Projectiles = new List<Projectile>();
-
+            animation.Addframe(new Frame(new Rectangle(96, 172, 96, 86)));
         }
         public override void Draw(SpriteBatch spriteBatch)
-        { 
-            
-            spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White);
+        {
+            if (IsAlive)
+            {
+                spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White);
+            }
         }
 
         public override void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
         {
-            Move();
-            UpdateAnimationFrames();
+            //animation.LoadTextureFrames(DirectionString, texture.Width, texture.Height, 4, 4);
             animation.Update(gameTime);
             collisionBox.Update((int)Position.X, (int)Position.Y);
-            shootingManager.UpdateHeroProjectile(this, gameTime, graphicsDevice);
-            
+            shootingManager.UpdateMageProjectile(this, gameTime, graphicsDevice);
         }
-        private void UpdateAnimationFrames()
+        
+        public void TakeDamage(int damage)
         {
-            if (DirectionString != "still")
+            Health -= damage;
+            if (Health <= 0)
             {
-                animation.LoadTextureFrames(DirectionString, texture.Width, texture.Height, 4, 4);
+                Debug.WriteLine("ENEMY JUST DIED");
             }
-            else
-            {
-                animation.Addframe(new Frame(new Rectangle(0, 0, texture.Width / 4, texture.Height / 4)));
-            }
-        }
-        public void Move()
-        {
-            movementManager.MovePlayer(this, this);
         }
         public void FireProjectile(GraphicsDevice graphicsDevice)
         {
-            if (DirectionString != "still")
-            {
+                if (Projectiles.Count >= 2) Projectiles.Clear();
                 Vector2 speed = Vector2.Zero;
                 switch (DirectionString)
                 {
@@ -96,17 +79,7 @@ namespace GameProject
                 }
                 Projectile projectile = new Projectile(bulletTexture, graphicsDevice) { Position = this.Position, Speed = speed };
                 Projectiles.Add(projectile);
-            }
-        }
-
-        public void TakeDamage(int damage)
-        {
-            Health -= damage;
-            if (!IsAlive)
-            {
-                Debug.WriteLine("YOU DIED!");
-            }
-           
+                Debug.WriteLine(Projectiles.Count);
             
         }
     }

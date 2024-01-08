@@ -10,6 +10,6 @@ namespace GameProject
 {
     internal interface IInputReader
     {
-        Vector2 ReadInput(IMovable movable);
+        Vector2 ReadInput(IControlable movable);
     }
 }

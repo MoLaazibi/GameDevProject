@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameProject.Interfaces
 {
-    internal interface IMovable
+    internal interface IControlable
     {
         public  Vector2 Position { get; set; }
         public Vector2 Speed { get; set; }

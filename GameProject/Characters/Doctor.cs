@@ -1,16 +1,16 @@
-﻿using GameProject.Interfaces;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameProject.Interfaces;
 
-namespace GameProject
+namespace GameProject.Characters
 {
-    internal class Enemy : Character, IGameObject, ICollidable, IEnemy, IMovingCharacter
+    internal class Doctor : Character, IMovingCharacter, IEnemy
     {
         public Vector2 Direction { get; set; }
         public CollisionBox collisionBox;
@@ -20,10 +20,10 @@ namespace GameProject
         }
         public bool IsAlive => Health > 0;
         public int Health { get; set; } = 3;
-        public Enemy(Texture2D texture) : base(texture)
+        public Doctor(Texture2D texture) : base(texture)
         {
-            Position = new Vector2(1, 50);
-            Speed = new Vector2(2, 2);
+            Position = new Vector2(1, 400);
+            Speed = new Vector2(4, 4);
             Direction = Vector2.UnitX;
         }
         public override void Draw(SpriteBatch spriteBatch)
